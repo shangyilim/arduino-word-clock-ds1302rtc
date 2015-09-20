@@ -156,7 +156,7 @@ seven     - 00100000
 twelve    - 01000000
 ten       - 10000000
 
-o'clock -extra pin 9
+o'clock - pin 8
 */
 void showTime(int hour, int minute) {
 
