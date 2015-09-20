@@ -117,14 +117,47 @@ void loop() {
   Serial.print(":");
   Serial.print(minuteInt);
   Serial.println("");
+  
  showTime(hourInt, minuteInt);
- // writedata(ledAddress[minuteInt % 5], ledAddress[minuteInt % 5], ledAddress[minuteInt % 5]);
-
-//writedata(0xFF,0xFF,0xFF);
-
+ 
   delay(1000);
 
 }
+/*
+*Shows the time based on the following LED configuration:
+shift register 1
+minute 5 -  00000000
+minute 1 -  00000001
+minute 2 -  00000011
+minute 3 -  00000111
+minute 4 -  00001111
+it is -     00010000
+a quarter - 00100000
+twenty    - 01000000
+five      - 10000000
+
+shift register 2
+half      - 00000001
+ten       - 00000010
+to        - 00000100
+past      - 00001000
+nine      - 00010000
+one       - 00100000
+six       - 01000000
+three     - 10000000
+
+shift register 2
+four      - 00000001
+five      - 00000010
+two       - 00000100
+eight     - 00001000
+eleven    - 00010000
+seven     - 00100000
+twelve    - 01000000
+ten       - 10000000
+
+o'clock -extra pin 9
+*/
 void showTime(int hour, int minute) {
 
   byte shift1 = ledAddress[4];//it is
