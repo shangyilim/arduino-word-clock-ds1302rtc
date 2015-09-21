@@ -109,8 +109,11 @@ void setupRTC() {
 }
 
 void loop() {
-  //testLEDs(1);
-  //testLEDs(1);M
+ // testAllTime();
+ startNormalTime();
+ delay(1000);
+}
+void startNormalTime(){
   int minuteInt = minute();
   int hourInt = hour();
   Serial.print(hourInt);
@@ -121,12 +124,20 @@ void loop() {
  showTime(hourInt, minuteInt);
  
   delay(1000);
-
+}
+void testAllTime(){
+  for(int hourInt =1; hourInt<=23; hourInt++){
+    for(int minuteInt = 1; minuteInt <=60; minuteInt++){
+      showTime(hourInt, minuteInt);
+      delay(1000);
+    }
+  }
 }
 /*
 *Shows the time based on the following LED configuration:
 shift register 1
 minute 5 -  00000000
+
 minute 1 -  00000001
 minute 2 -  00000011
 minute 3 -  00000111
@@ -178,8 +189,13 @@ void showTime(int hour, int minute) {
     shift2 += ledAddress[2];
   }
     
-  if(clockText.indexOf("twentyfive")>-1)
-    shift1 += ledAddress[6] + ledAddress[7]; 
+  if(clockText.indexOf("twentyfive")>-1){
+    
+    shift1 += ledAddress[6] + ledAddress[7];
+    
+    Serial.print("adding adr7, adr8:");
+    Serial.println(shift1);
+  }
   else if(clockText.indexOf("twentyfour")>-1)
   {
     shift1+= ledAddress[7];
@@ -234,8 +250,12 @@ void showTime(int hour, int minute) {
 
 if(clockText.indexOf("five")>-1)
 { 
-  if(clockText.indexOf("five past") >-1 || clockText.indexOf("five to")>-1 || clockText.indexOf("o'clock") >-1 || clockText.indexOf("twentyfive") >-1)
+  if(clockText.indexOf(" five past") >-1 || clockText.indexOf(" five to")>-1 || clockText.indexOf("o'clock") >-1){
+
     shift1+= ledAddress[7];
+     
+    Serial.println(shift1);
+  }
   if(clockText.indexOf("to five")>-1 || clockText.indexOf("past five") >-1)
     shift3 += ledAddress[1];
 }
@@ -468,7 +488,3 @@ void shiftOut(int myDataPin, int myClockPin, byte myDataOut) {
   //stop shifting
   digitalWrite(myClockPin, 0);
 }
-
-
-
-
